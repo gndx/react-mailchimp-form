@@ -89,7 +89,7 @@ Add a personalized class to personalize your form
       error: "An unexpected internal error has occurred.",
       empty: "You must write an e-mail.",
       duplicate: "Too many subscribe attempts for this email address",
-      button: 'Subscribe!'
+      button: "Subscribe!"
     }
   }
   // Add a personalized class
@@ -100,7 +100,6 @@ Add a personalized class to personalize your form
 
 # Demo
 Check here: [react-mailchimp-form](https://react-mailchimp-form.firebaseapp.com)
-
 
 # Contributing
 If someone wants to add or improve something, I invite you to collaborate directly in this repository: [react-mailchimp-form](https://github.com/gndx/react-mailchimp-form/)

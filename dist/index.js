@@ -213,7 +213,7 @@
 
   Mailchimp.defaultProps = {
     messages: {
-      sending: "sending...",
+      sending: "Sending...",
       success: "Thank you for subscribing!",
       error: "An unexpected internal error has occurred.",
       empty: "You must write an e-mail.",
