@@ -1,6 +1,6 @@
 {
   "name": "react-mailchimp-form",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React subscribe form for Mailchimp",
   "main": "dist/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "author": {
     "name": "Oscar Barajas",
     "email": "oscar@dragons.mx"
-  },  
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gndx/react-mailchimp-form/issues"
