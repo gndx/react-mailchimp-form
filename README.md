@@ -82,7 +82,7 @@ Add a personalized class to personalize your form
     }
   ]}
   // Change predetermined language
-  message={
+  messages = {
     {
       sending: "Sending...",
       success: "Thank you for subscribing!",
