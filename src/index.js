@@ -3,10 +3,7 @@ import jsonp from "jsonp"
 import PropTypes from 'prop-types';
 
 class Mailchimp extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {};
-  };
+  state = {};
 
   handleSubmit(evt) {
     evt.preventDefault();
