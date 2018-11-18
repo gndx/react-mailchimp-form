@@ -37,21 +37,26 @@ class Mailchimp extends React.Component {
   }
 
   render() {
-    const { messages, fields, styles, className } = this.props;
+    const { fields, styles, className, buttonClassName } = this.props;
+    const messages = {
+      ...Mailchimp.defaultProps.messages,
+      ...this.props.messages
+    }
     const { status } = this.state;
     return (
       <form onSubmit={this.handleSubmit.bind(this)} className={className}>
         {fields.map(input =>
-          <input key={input.name}
+          <input
+            {...input}
+            key={input.name}
             onChange={({ target }) => this.setState({ [input.name]: target.value })}
-            placeholder={input.placeholder}
-            name={input.name}
-            type={input.type}
-            defaultValue={this.state[input.name]} />
+            defaultValue={this.state[input.name]}
+          />
         )}
         <button
           disabled={status === "sending" || status === "success"}
           type="submit"
+          className={buttonClassName}
         >
           {messages.button}
         </button>
@@ -74,30 +79,32 @@ Mailchimp.defaultProps = {
     error: "An unexpected internal error has occurred.",
     empty: "You must write an e-mail.",
     duplicate: "Too many subscribe attempts for this email address",
-    button: 'Subscribe!'
+    button: "Subscribe!"
   },
+  buttonClassName: "",
   styles: {
     sendingMsg: {
-      color: '#0652DD'
+      color: "#0652DD"
     },
     successMsg: {
-      color: '#009432'
+      color: "#009432"
     },
     duplicateMsg: {
-      color: '#EE5A24'
+      color: "#EE5A24"
     },
     errorMsg: {
-      color: '#ED4C67'
+      color: "#ED4C67"
     }
   }
-}
+};
 
 Mailchimp.propTypes = {
   action: PropTypes.string,
   messages: PropTypes.object,
   fields: PropTypes.array,
   styles: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  buttonClassName: PropTypes.string
 };
 
 export default Mailchimp;
