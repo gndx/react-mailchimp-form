@@ -99,7 +99,7 @@ Add a personalized class to personalize your form
 ```
 
 # Demo
-Check here: [react-mailchimp-form](https://react-mailchimp-form.firebaseapp.com)
+Check here: [react-mailchimp-form](https://arepa-dev.github.io/reactMailchimp/)
 
 # Contributing
 If someone wants to add or improve something, I invite you to collaborate directly in this repository: [react-mailchimp-form](https://github.com/gndx/react-mailchimp-form/)
