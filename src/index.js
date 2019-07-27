@@ -1,13 +1,36 @@
-import React from "react"
+import React,{useState} from "react"
 import jsonp from "jsonp"
-import PropTypes from 'prop-types';
 
-class Mailchimp extends React.Component {
-  state = {};
+export default ({fields, styles, className, buttonClassName, action,
+  messages = {
+    sending: "Sending...",
+    success: "Thank you for subscribing!",
+    error: "An unexpected internal error has occurred.",
+    empty: "You must write an e-mail.",
+    duplicate: "Too many subscribe attempts for this email address",
+    button: "Subscribe!"
+  },
+  styles = {
+    sendingMsg: {
+      color: "#0652DD"
+    },
+    successMsg: {
+      color: "#009432"
+    },
+    duplicateMsg: {
+      color: "#EE5A24"
+    },
+    errorMsg: {
+      color: "#ED4C67"
+    }
+  }
+}) => {
+  const [status,setStatus] =useState('');
+  const [fields,setFields] =useState(fields.map(item => item.name));
 
-  handleSubmit(evt) {
+  const handleChange = (field,value) => {}
+  const handleSubmit = evt => {
     evt.preventDefault();
-    const { fields, action } = this.props;
     const values = fields.map(field => {
       return `${field.name}=${encodeURIComponent(this.state[field.name])}`;
     }).join("&");
@@ -15,39 +38,32 @@ class Mailchimp extends React.Component {
     const url = path.replace('/post?', '/post-json?');
     const regex = /^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/;
     const email = this.state['EMAIL'];
-    (!regex.test(email)) ? this.setState({ status: "empty" }) : this.sendData(url);
+    (!regex.test(email)) ? setStatus("empty") : sendData(url);
   };
 
-  sendData(url) {
-    this.setState({ status: "sending" });
+  const sendData = url =>  {
+    setStatus("sending")
     jsonp(url, { param: "c" }, (err, data) => {
       if (data.msg.includes("already subscribed")) {
-        this.setState({ status: 'duplicate' });
+        setStatus("duplicate")
       } else if (err) {
-        this.setState({ status: 'error' });
+        setStatus("error")
       } else if (data.result !== 'success') {
-        this.setState({ status: 'error' });
+        setStatus("error")
       } else {
-        this.setState({ status: 'success' });
+        setStatus("success")
       };
     });
   }
 
-  render() {
-    const { fields, styles, className, buttonClassName } = this.props;
-    const messages = {
-      ...Mailchimp.defaultProps.messages,
-      ...this.props.messages
-    }
-    const { status } = this.state;
     return (
-      <form onSubmit={this.handleSubmit.bind(this)} className={className}>
+      <form onSubmit={handleSubmit} className={className}>
         {fields.map(input =>
           <input
             {...input}
             key={input.name}
-            onChange={({ target }) => this.setState({ [input.name]: target.value })}
-            defaultValue={this.state[input.name]}
+            onChange={({ target }) => handleChange(input.name,target.value)}
+            value={fields[input.name].value}
           />
         )}
         <button
@@ -66,42 +82,4 @@ class Mailchimp extends React.Component {
         </div>
       </form>
     );
-  }
 }
-
-Mailchimp.defaultProps = {
-  messages: {
-    sending: "Sending...",
-    success: "Thank you for subscribing!",
-    error: "An unexpected internal error has occurred.",
-    empty: "You must write an e-mail.",
-    duplicate: "Too many subscribe attempts for this email address",
-    button: "Subscribe!"
-  },
-  buttonClassName: "",
-  styles: {
-    sendingMsg: {
-      color: "#0652DD"
-    },
-    successMsg: {
-      color: "#009432"
-    },
-    duplicateMsg: {
-      color: "#EE5A24"
-    },
-    errorMsg: {
-      color: "#ED4C67"
-    }
-  }
-};
-
-Mailchimp.propTypes = {
-  action: PropTypes.string,
-  messages: PropTypes.object,
-  fields: PropTypes.array,
-  styles: PropTypes.object,
-  className: PropTypes.string,
-  buttonClassName: PropTypes.string
-};
-
-export default Mailchimp;
