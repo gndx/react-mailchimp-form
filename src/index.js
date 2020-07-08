@@ -43,12 +43,12 @@ class Mailchimp extends React.Component {
     return (
       <form onSubmit={this.handleSubmit.bind(this)} className={className}>
         {fields.map(input =>
-          <input
-            {...input}
-            key={input.name}
-            onChange={({ target }) => this.setState({ [input.name]: target.value })}
-            defaultValue={this.state[input.name]}
-          />
+          React.createElement(inputTag(input), {
+            ...input,
+            key: input.name,
+            onChange: ({ target }) => this.setState({ [input.name]: target.value }),
+            defaultValue: this.state[input.name],
+          }),
         )}
         <button
           disabled={status === "sending" || status === "success"}
@@ -67,6 +67,15 @@ class Mailchimp extends React.Component {
       </form>
     );
   }
+}
+           
+const inputTag = input => {
+  const type = input.type
+  if (type === 'textarea') {
+    return type
+  }
+
+  return 'input'
 }
 
 Mailchimp.defaultProps = {
