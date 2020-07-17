@@ -46,6 +46,7 @@ class Mailchimp extends React.Component {
           <input
             {...input}
             key={input.name}
+            aria-label={input.name}
             onChange={({ target }) => this.setState({ [input.name]: target.value })}
             defaultValue={this.state[input.name]}
           />
