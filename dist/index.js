@@ -44,6 +44,20 @@
     return obj;
   }
 
+  var _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -95,13 +109,18 @@
   var Mailchimp = function (_React$Component) {
     _inherits(Mailchimp, _React$Component);
 
-    function Mailchimp(props) {
+    function Mailchimp() {
+      var _ref;
+
+      var _temp, _this, _ret;
+
       _classCallCheck(this, Mailchimp);
 
-      var _this = _possibleConstructorReturn(this, (Mailchimp.__proto__ || Object.getPrototypeOf(Mailchimp)).call(this, props));
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
 
-      _this.state = {};
-      return _this;
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mailchimp.__proto__ || Object.getPrototypeOf(Mailchimp)).call.apply(_ref, [this].concat(args))), _this), _this.state = {}, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(Mailchimp, [{
@@ -147,31 +166,42 @@
         var _this4 = this;
 
         var _props2 = this.props,
-            messages = _props2.messages,
             fields = _props2.fields,
             styles = _props2.styles,
-            className = _props2.className;
+            className = _props2.className,
+            buttonClassName = _props2.buttonClassName;
+
+        var messages = _extends({}, Mailchimp.defaultProps.messages, this.props.messages);
         var status = this.state.status;
 
         return _react2.default.createElement(
           "form",
           { onSubmit: this.handleSubmit.bind(this), className: className },
           fields.map(function (input) {
-            return _react2.default.createElement("input", { key: Math.random(),
-              onBlur: function onBlur(_ref) {
-                var target = _ref.target;
-                return _this4.setState(_defineProperty({}, input.name, target.value));
-              },
-              placeholder: input.placeholder,
-              name: input.name,
-              type: input.type,
-              defaultValue: _this4.state[input.name] });
+            return _react2.default.createElement(
+              "div",
+              { className: "form-group" },
+              _react2.default.createElement(
+                "label",
+                { "for": input.name },
+                input.label
+              ),
+              _react2.default.createElement("input", _extends({}, input, {
+                key: input.name,
+                onChange: function onChange(_ref2) {
+                  var target = _ref2.target;
+                  return _this4.setState(_defineProperty({}, input.name, target.value));
+                },
+                defaultValue: _this4.state[input.name]
+              }))
+            );
           }),
           _react2.default.createElement(
             "button",
             {
               disabled: status === "sending" || status === "success",
-              type: "submit"
+              type: "submit",
+              className: buttonClassName
             },
             messages.button
           ),
@@ -218,20 +248,21 @@
       error: "An unexpected internal error has occurred.",
       empty: "You must write an e-mail.",
       duplicate: "Too many subscribe attempts for this email address",
-      button: 'Subscribe!'
+      button: "Subscribe!"
     },
+    buttonClassName: "",
     styles: {
       sendingMsg: {
-        color: '#0652DD'
+        color: "#0652DD"
       },
       successMsg: {
-        color: '#009432'
+        color: "#009432"
       },
       duplicateMsg: {
-        color: '#EE5A24'
+        color: "#EE5A24"
       },
       errorMsg: {
-        color: '#ED4C67'
+        color: "#ED4C67"
       }
     }
   };
@@ -241,7 +272,8 @@
     messages: _propTypes2.default.object,
     fields: _propTypes2.default.array,
     styles: _propTypes2.default.object,
-    className: _propTypes2.default.string
+    className: _propTypes2.default.string,
+    buttonClassName: _propTypes2.default.string
   };
 
   exports.default = Mailchimp;
