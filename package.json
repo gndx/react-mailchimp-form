@@ -49,5 +49,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
 }
